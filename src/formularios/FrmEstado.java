@@ -56,6 +56,7 @@ public class FrmEstado extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Estados");
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -89,7 +90,7 @@ public class FrmEstado extends javax.swing.JFrame {
         });
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/remove_item.png"))); // NOI18N
-        btnEliminar.setToolTipText("Eliminat");
+        btnEliminar.setToolTipText("Eliminar");
         btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +108,7 @@ public class FrmEstado extends javax.swing.JFrame {
         });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/right_arrow.png"))); // NOI18N
-        jButton5.setToolTipText("Cancelar");
+        jButton5.setToolTipText("Salir");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -125,10 +126,15 @@ public class FrmEstado extends javax.swing.JFrame {
 
             }
         ));
+        tblEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEstadoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblEstado);
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete_item.png"))); // NOI18N
-        btnCancelar.setToolTipText("Guardar");
+        btnCancelar.setToolTipText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -174,22 +180,6 @@ public class FrmEstado extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnSalvar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -200,10 +190,13 @@ public class FrmEstado extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addGap(24, 24, 24)
                                 .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(68, 68, 68)
+                                .addGap(35, 35, 35)
                                 .addComponent(jLabel4)
-                                .addGap(24, 24, 24)
-                                .addComponent(txtSigla, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtSigla, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnPrimer, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -211,9 +204,22 @@ public class FrmEstado extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnUltimo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(btnUltimo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(25, 25, 25)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 35, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,27 +238,23 @@ public class FrmEstado extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnPrimer)
-                                    .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnUltimo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(23, 23, 23)))
+                            .addComponent(btnPrimer)
+                            .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnUltimo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSiguiente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(44, 44, 44)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCancelar))
+                            .addComponent(btnEditar))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSalvar)
+                            .addComponent(btnCancelar)
+                            .addComponent(jButton5)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -265,11 +267,11 @@ public class FrmEstado extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(113, 113, 113)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -279,7 +281,7 @@ public class FrmEstado extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap())
         );
 
         pack();
@@ -302,6 +304,7 @@ public class FrmEstado extends javax.swing.JFrame {
             btnSalvar.setEnabled(false);
             btnNovo.setEnabled(true);            
             JOptionPane.showMessageDialog(this, "Salvo con sucesso!");
+            preencherTabela("select * from estados order by id_estado");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error en la insercion!\nError: " + ex.getMessage());
         }
@@ -321,6 +324,7 @@ public class FrmEstado extends javax.swing.JFrame {
             btnEliminar.setEnabled(false);
             btnEditar.setEnabled(false);
         JOptionPane.showMessageDialog(this, "Registro eliminado");
+        preencherTabela("select * from estados order by id_estado");
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -431,7 +435,8 @@ public class FrmEstado extends javax.swing.JFrame {
             pst.setString(1, txtNome.getText());
             pst.setString(2, txtSigla.getText());
             pst.execute();
-            JOptionPane.showMessageDialog(this, "Registro editado");                    
+            JOptionPane.showMessageDialog(this, "Registro editado");
+            preencherTabela("select * from estados order by id_estado");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al editar. \n" + ex.getMessage());        
         }
@@ -446,6 +451,25 @@ public class FrmEstado extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnEliminar.setEnabled(false);
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void tblEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstadoMouseClicked
+        // TODO add your handling code here:
+          try {
+            btnEditar.setEnabled(true);
+            btnEliminar.setEnabled(true);
+            txtNome.setEnabled(true);
+            txtSigla.setEnabled(true);            
+            conecta.execSQLrs("select * from estados where id_estado = " + tblEstado.getValueAt(tblEstado.getSelectedRow(), 0));
+            conecta.rs.next();
+            txtId.setText(String.valueOf(conecta.rs.getInt("id_estado")));
+            txtNome.setText(conecta.rs.getString("nome_estado"));
+            txtSigla.setText(conecta.rs.getString("sigla_estado"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + ex.getMessage() );
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + e.getMessage() );
+        }          
+    }//GEN-LAST:event_tblEstadoMouseClicked
 
     public void preencherTabela(String sql){
         ArrayList datos= new ArrayList();
@@ -464,11 +488,11 @@ public class FrmEstado extends javax.swing.JFrame {
         }
     ModeloTabela modelo= new ModeloTabela(datos, colunas);
         tblEstado.setModel(modelo);
-        tblEstado.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tblEstado.getColumnModel().getColumn(0).setPreferredWidth(90);
         tblEstado.getColumnModel().getColumn(0).setResizable(false);
-        tblEstado.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tblEstado.getColumnModel().getColumn(1).setPreferredWidth(190);
         tblEstado.getColumnModel().getColumn(1).setResizable(false);
-        tblEstado.getColumnModel().getColumn(2).setPreferredWidth(80);
+        tblEstado.getColumnModel().getColumn(2).setPreferredWidth(90);
         tblEstado.getColumnModel().getColumn(2).setResizable(false);
         tblEstado.getTableHeader().setReorderingAllowed(false);
         tblEstado.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
