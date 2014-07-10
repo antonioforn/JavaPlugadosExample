@@ -79,6 +79,11 @@ public class FrmEstado extends javax.swing.JFrame {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete_item.png"))); // NOI18N
         jButton5.setToolTipText("Cancelar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         tblEstado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -206,6 +211,11 @@ public class FrmEstado extends javax.swing.JFrame {
         conecta.executaSQL("delete from estados where id_estado = " + txtId.getText());
         JOptionPane.showMessageDialog(this, "Registro eliminado");
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

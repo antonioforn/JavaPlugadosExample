@@ -35,7 +35,7 @@ public class ConectaBanco {
     public void executaSQL(String sql){
         try {
             stm= conn.createStatement(rs.TYPE_SCROLL_INSENSITIVE, rs.CONCUR_READ_ONLY);
-            rs= stm.executeQuery(sql);
+            stm.execute(sql);
             
         } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL. \nErro: " + ex.getMessage());
