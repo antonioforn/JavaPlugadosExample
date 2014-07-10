@@ -42,6 +42,17 @@ public class ConectaBanco {
         }
         
     }
+    public void execSQLrs(String sql){
+        try {
+            stm= conn.createStatement(rs.TYPE_SCROLL_INSENSITIVE, rs.CONCUR_READ_ONLY);
+            rs=null;
+            rs = stm.executeQuery(sql);
+            
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL. \nErro: " + ex.getMessage());
+        }
+        
+    }
     
     public void desconecta(){
         try { 
