@@ -4,10 +4,14 @@ package formularios;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import utilitarios.ConectaBanco;
+import utilitarios.ModeloTabela;
 
 
 public class FrmEstado extends javax.swing.JFrame {
@@ -17,6 +21,7 @@ public class FrmEstado extends javax.swing.JFrame {
     public FrmEstado() {
         initComponents();
         conecta.conexao();
+        preencherTabela("select * from estados order by id_estado");
     }
 
     /**
@@ -442,6 +447,34 @@ public class FrmEstado extends javax.swing.JFrame {
         btnEliminar.setEnabled(false);
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    public void preencherTabela(String sql){
+        ArrayList datos= new ArrayList();
+        String[] colunas = new String[]{"Id", "Nome", "Sigla"}; 
+        try{
+            conecta.execSQLrs(sql);
+            while(conecta.rs.next()){
+                datos.add(new Object[]{conecta.rs.getInt("id_estado"),
+                                        conecta.rs.getString("nome_estado"),
+                                        conecta.rs.getString("sigla_estado")
+                                        });
+                
+            }
+        }catch(SQLException ex){
+        JOptionPane.showMessageDialog(this, "Error al cargar ArrayList. \n" + ex.getMessage());        
+        }
+    ModeloTabela modelo= new ModeloTabela(datos, colunas);
+        tblEstado.setModel(modelo);
+        tblEstado.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tblEstado.getColumnModel().getColumn(0).setResizable(false);
+        tblEstado.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tblEstado.getColumnModel().getColumn(1).setResizable(false);
+        tblEstado.getColumnModel().getColumn(2).setPreferredWidth(80);
+        tblEstado.getColumnModel().getColumn(2).setResizable(false);
+        tblEstado.getTableHeader().setReorderingAllowed(false);
+        tblEstado.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tblEstado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+    }
     /**
      * @param args the command line arguments
      */
