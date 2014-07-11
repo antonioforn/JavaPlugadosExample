@@ -58,6 +58,11 @@ public class Principal extends javax.swing.JFrame {
         mnCadastros.add(mnItEstados);
 
         jMenuItem2.setText("Cidades");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         mnCadastros.add(jMenuItem2);
 
         jMenuItem3.setText("Bairro");
@@ -130,6 +135,11 @@ public class Principal extends javax.swing.JFrame {
         FrmEstado frmEstado = new FrmEstado();
         frmEstado.setVisible(true);
     }//GEN-LAST:event_mnItEstadosActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        new FrmCidades().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
