@@ -1,6 +1,6 @@
 
 
-package utilitarios;
+package controle;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

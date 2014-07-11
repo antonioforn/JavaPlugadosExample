@@ -1,6 +1,6 @@
 
 
-package formularios;
+package visao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import utilitarios.ConectaBanco;
-import utilitarios.ModeloTabela;
+import controle.ConectaBanco;
+import controle.ModeloTabela;
 
 
 public class FrmEstado extends javax.swing.JFrame {

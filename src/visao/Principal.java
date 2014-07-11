@@ -1,9 +1,9 @@
 
 
-package formularios;
+package visao;
 
 import javax.swing.JOptionPane;
-import utilitarios.ConectaBanco;
+import controle.ConectaBanco;
 
 
 public class Principal extends javax.swing.JFrame {

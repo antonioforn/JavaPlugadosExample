@@ -1,6 +1,6 @@
 
 
-package utilitarios;
+package controle;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
