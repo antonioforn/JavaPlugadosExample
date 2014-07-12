@@ -11,16 +11,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import controle.ConectaBanco;
+import controle.ControleCidade;
 import controle.ModeloTabela;
+import modelo.ModeloCidade;
 
 
 public class FrmCidades extends javax.swing.JFrame {
 
-    ConectaBanco conecta = new ConectaBanco();
+    ConectaBanco conecta = new ConectaBanco();//para la tabla estados
+    ConectaBanco conecta2 = new ConectaBanco();// para la tabla cidade
+    ModeloCidade mod = new ModeloCidade();
+    ControleCidade control = new ControleCidade();    
     
     public FrmCidades() {
         initComponents();
         conecta.conexao();
+        conecta2.conexao();
         //preencherTabela("select * from estados order by id_estado");
         preencherCmbEstado();
     }
@@ -57,7 +63,9 @@ public class FrmCidades extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Cidades");
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
         setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -290,28 +298,26 @@ public class FrmCidades extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+
         try {
-            // TODO add your handling code here:
-            PreparedStatement pst = conecta.conn.prepareStatement("insert into estados (nome_estado, sigla_estado)"
-                    + "values (?,?)");
-            pst.setString(1, txtNome.getText());
-            pst.executeUpdate();
-            txtId.setText(null);
-            txtNome.setText(null);
-            txtNome.setEnabled(false);
-            btnSalvar.setEnabled(false);
-            btnNovo.setEnabled(true);            
-            JOptionPane.showMessageDialog(this, "Salvo con sucesso!");
-            preencherTabela("select * from estados order by id_estado");
+            mod.setNome(txtNome.getText());
+            conecta.execSQLrs("select * from estados where nome_estado like '"
+                    + cmbEstado.getSelectedItem().toString() +"'");
+            System.out.println(conecta.rs.next()); 
+            mod.setCod_estado(conecta.rs.getInt("id_estado"));
+            control.inserirCidade(mod);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error en la insercion!\nError: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        conecta.executaSQL("delete from estados where id_estado = " + txtId.getText());
+        try {
+            mod.setCod(Integer.parseInt(txtId.getText()));
+            mod.setNome(txtNome.getText());
+            mod.setCod_estado(conecta.rs.getInt("id_estado"));
+            control.excluiCidade(mod);
             txtId.setText(null);
             txtNome.setText(null);
             txtNome.setEnabled(false);
@@ -319,8 +325,11 @@ public class FrmCidades extends javax.swing.JFrame {
             btnNovo.setEnabled(true);   
             btnEliminar.setEnabled(false);
             btnEditar.setEnabled(false);
-        JOptionPane.showMessageDialog(this, "Registro eliminado");
-        preencherTabela("select * from estados order by id_estado");
+            JOptionPane.showMessageDialog(this, "Registro eliminado");
+            //preencherTabela("select * from estados order by id_estado");
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmCidades.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -347,69 +356,73 @@ public class FrmCidades extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-        // TODO add your handling code here:
         try {
-            btnEditar.setEnabled(true);
-            btnEliminar.setEnabled(true);            
-            txtNome.setEnabled(true);
-            conecta.rs.previous();
-            txtId.setText(String.valueOf(conecta.rs.getInt("id_estado")));
-            txtNome.setText(conecta.rs.getString("nome_estado"));
+            conecta2.rs.previous();
+            txtId.setText(String.valueOf(conecta2.rs.getInt("id_cidade")));
+            txtNome.setText(conecta2.rs.getString("nome_cidade"));
+            conecta.execSQLrs("select * from estados where id_estado = "
+                    + conecta2.rs.getInt("id_estado"));
+            conecta.rs.next();
+            cmbEstado.setSelectedItem((Object) conecta.rs.getString("nome_estado"));
+            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + ex.getMessage() );
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + e.getMessage() );
-        }    
+            JOptionPane.showMessageDialog(this, "Error al traer el registro. \n" + ex.getMessage() );
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Error al traer el registro. \n" + e.getMessage() );
+        }
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void btnPrimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimerActionPerformed
         try {
-            // TODO add your handling code here:
-            btnEditar.setEnabled(true);
-            btnEliminar.setEnabled(true);
-            txtNome.setEnabled(true);
-            conecta.execSQLrs("select * from estados");
-            conecta.rs.first();
-            txtId.setText(String.valueOf(conecta.rs.getInt("id_estado")));
-            txtNome.setText(conecta.rs.getString("nome_estado"));
+            conecta2.execSQLrs("select * from cidade order by id_cidade");
+            conecta2.rs.first();
+            txtId.setText(String.valueOf(conecta2.rs.getInt("id_cidade")));
+            txtNome.setText(conecta2.rs.getString("nome_cidade"));
+            conecta.execSQLrs("select * from estados where id_estado = "
+                    + conecta2.rs.getInt("id_estado"));
+            conecta.rs.next();
+            cmbEstado.setSelectedItem((Object) conecta.rs.getString("nome_estado"));
+            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + ex.getMessage() );
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + e.getMessage() );
+            JOptionPane.showMessageDialog(this, "Error al traer el primer registro. \n" + ex.getMessage() );
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Error al traer el primer registro. \n" + e.getMessage() );
         }
     }//GEN-LAST:event_btnPrimerActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        // TODO add your handling code here:
         try {
-            btnEditar.setEnabled(true);
-            btnEliminar.setEnabled(true);            
-            txtNome.setEnabled(true);
+            conecta2.rs.next();
+            txtId.setText(String.valueOf(conecta2.rs.getInt("id_cidade")));
+            txtNome.setText(conecta2.rs.getString("nome_cidade"));
+            conecta.execSQLrs("select * from estados where id_estado = "
+                    + conecta2.rs.getInt("id_estado"));
             conecta.rs.next();
-            txtId.setText(String.valueOf(conecta.rs.getInt("id_estado")));
-            txtNome.setText(conecta.rs.getString("nome_estado"));
+            cmbEstado.setSelectedItem((Object) conecta.rs.getString("nome_estado"));
+            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + ex.getMessage() );
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + e.getMessage() );
-        }        
+            JOptionPane.showMessageDialog(this, "Error al traer el registro. \n" + ex.getMessage() );
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Error al traer el registro. \n" + e.getMessage() );
+        }      
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
-        // TODO add your handling code here:
-          try {
-            btnEditar.setEnabled(true);
-            btnEliminar.setEnabled(true);
-            txtNome.setEnabled(true);
-            conecta.execSQLrs("select * from estados");
-            conecta.rs.last();
-            txtId.setText(String.valueOf(conecta.rs.getInt("id_estado")));
-            txtNome.setText(conecta.rs.getString("nome_estado"));
+        try {
+            conecta2.execSQLrs("select * from cidade order by id_cidade");
+            conecta2.rs.last();
+            txtId.setText(String.valueOf(conecta2.rs.getInt("id_cidade")));
+            txtNome.setText(conecta2.rs.getString("nome_cidade"));
+            conecta.execSQLrs("select * from estados where id_estado = "
+                    + conecta2.rs.getInt("id_estado"));
+            conecta.rs.next();
+            cmbEstado.setSelectedItem((Object) conecta.rs.getString("nome_estado"));
+            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + ex.getMessage() );
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + e.getMessage() );
-        }      
+            JOptionPane.showMessageDialog(this, "Error al traer el ultimo registro. \n" + ex.getMessage() );
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Error al traer el ultimo registro. \n" + e.getMessage() );
+        }   
     }//GEN-LAST:event_btnUltimoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
