@@ -22,12 +22,22 @@ public class FrmCidades extends javax.swing.JFrame {
     ConectaBanco conecta2 = new ConectaBanco();// para la tabla cidade
     ModeloCidade mod = new ModeloCidade();
     ControleCidade control = new ControleCidade();    
+    javax.swing.JFrame padre;
     
     public FrmCidades() {
         initComponents();
         conecta.conexao();
         conecta2.conexao();
-        //preencherTabela("select * from estados order by id_estado");
+        preencherTabela("select * from cidade inner join estados on cidade.id_estado = estados.id_estado order by id_cidade");
+        preencherCmbEstado();
+    }
+    
+    public FrmCidades(javax.swing.JFrame padre) {
+        this.padre= padre;
+        initComponents();
+        conecta.conexao();
+        conecta2.conexao();
+       preencherTabela("select * from cidade inner join estados on cidade.id_estado = estados.id_estado order by id_cidade");
         preencherCmbEstado();
     }
 
@@ -63,9 +73,13 @@ public class FrmCidades extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Cidades");
-        setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -303,13 +317,12 @@ public class FrmCidades extends javax.swing.JFrame {
             mod.setNome(txtNome.getText());
             conecta.execSQLrs("select * from estados where nome_estado like '"
                     + cmbEstado.getSelectedItem().toString() +"'");
-            System.out.println(conecta.rs.next()); 
             mod.setCod_estado(conecta.rs.getInt("id_estado"));
             control.inserirCidade(mod);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-        
+        preencherTabela("select * from cidade inner join estados on cidade.id_estado = estados.id_estado order by id_cidade");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -325,10 +338,9 @@ public class FrmCidades extends javax.swing.JFrame {
             btnNovo.setEnabled(true);   
             btnEliminar.setEnabled(false);
             btnEditar.setEnabled(false);
-            JOptionPane.showMessageDialog(this, "Registro eliminado");
             //preencherTabela("select * from estados order by id_estado");
         } catch (SQLException ex) {
-            Logger.getLogger(FrmCidades.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error al eliminar registro.\n" + ex.getMessage());
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -374,6 +386,10 @@ public class FrmCidades extends javax.swing.JFrame {
 
     private void btnPrimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimerActionPerformed
         try {
+            btnEditar.setEnabled(true);
+            btnEliminar.setEnabled(true);
+            txtNome.setEnabled(true);
+            cmbEstado.setEnabled(true);            
             conecta2.execSQLrs("select * from cidade order by id_cidade");
             conecta2.rs.first();
             txtId.setText(String.valueOf(conecta2.rs.getInt("id_cidade")));
@@ -409,6 +425,10 @@ public class FrmCidades extends javax.swing.JFrame {
 
     private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
         try {
+            btnEditar.setEnabled(true);
+            btnEliminar.setEnabled(true);
+            txtNome.setEnabled(true);
+            cmbEstado.setEnabled(true);                        
             conecta2.execSQLrs("select * from cidade order by id_cidade");
             conecta2.rs.last();
             txtId.setText(String.valueOf(conecta2.rs.getInt("id_cidade")));
@@ -427,12 +447,15 @@ public class FrmCidades extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         try {
-            // TODO add your handling code here:
-            PreparedStatement pst = conecta.conn.prepareStatement("update estados set nome_estado = ?, sigla_estado = ? where id_estado = " + txtId.getText());
-            pst.setString(1, txtNome.getText());
-            pst.execute();
-            JOptionPane.showMessageDialog(this, "Registro editado");
-            preencherTabela("select * from estados order by id_estado");
+            mod.setCod(Integer.parseInt(txtId.getText()));
+            mod.setNome(txtNome.getText());
+            conecta.execSQLrs("select * from estados where nome_estado like '"
+                    + cmbEstado.getSelectedItem().toString() +"'");
+            conecta.rs.next();
+            mod.setCod_estado(conecta.rs.getInt("id_estado"));
+            control.alterarCidade(mod);
+            //JOptionPane.showMessageDialog(this, "Registro editado");
+            preencherTabela("select * from cidade inner join estados on cidade.id_estado = estados.id_estado order by id_cidade");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al editar. \n" + ex.getMessage());        
         }
@@ -452,10 +475,14 @@ public class FrmCidades extends javax.swing.JFrame {
             btnEditar.setEnabled(true);
             btnEliminar.setEnabled(true);
             txtNome.setEnabled(true);
-            conecta.execSQLrs("select * from estados where id_estado = " + tabela.getValueAt(tabela.getSelectedRow(), 0));
+            conecta2.execSQLrs("select * from cidade where id_cidade = " + tabela.getValueAt(tabela.getSelectedRow(), 0));
+            conecta2.rs.next();
+            txtId.setText(String.valueOf(conecta2.rs.getInt("id_cidade")));
+            txtNome.setText(conecta2.rs.getString("nome_cidade"));
+            conecta.execSQLrs("select * from estados where id_estado = "
+                    + conecta2.rs.getInt("id_estado"));
             conecta.rs.next();
-            txtId.setText(String.valueOf(conecta.rs.getInt("id_estado")));
-            txtNome.setText(conecta.rs.getString("nome_estado"));
+            cmbEstado.setSelectedItem((Object) conecta.rs.getString("nome_estado"));            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao mostrar dados \n" + ex.getMessage() );
         } catch(Exception e){
@@ -463,15 +490,23 @@ public class FrmCidades extends javax.swing.JFrame {
         }          
     }//GEN-LAST:event_tabelaMouseClicked
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        if (padre != null){
+            padre.setVisible(true);
+            padre.setEnabled(true);
+        }
+    }//GEN-LAST:event_formWindowClosed
+
     public void preencherTabela(String sql){
         ArrayList datos= new ArrayList();
-        String[] colunas = new String[]{"Id", "Nome", "Sigla"}; 
+        String[] colunas = new String[]{"Id", "Nome", "Estado"}; 
         try{
-            conecta.execSQLrs(sql);
-            while(conecta.rs.next()){
-                datos.add(new Object[]{conecta.rs.getInt("id_estado"),
-                                        conecta.rs.getString("nome_estado"),
-                                        conecta.rs.getString("sigla_estado")
+            conecta2.execSQLrs(sql);
+            while(conecta2.rs.next()){
+                datos.add(new Object[]{conecta2.rs.getInt("id_cidade"),
+                                        conecta2.rs.getString("nome_cidade"),
+                                        conecta2.rs.getString("nome_estado")
                                         });
                 
             }
@@ -482,9 +517,9 @@ public class FrmCidades extends javax.swing.JFrame {
         tabela.setModel(modelo);
         tabela.getColumnModel().getColumn(0).setPreferredWidth(90);
         tabela.getColumnModel().getColumn(0).setResizable(false);
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(190);
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(170);
         tabela.getColumnModel().getColumn(1).setResizable(false);
-        tabela.getColumnModel().getColumn(2).setPreferredWidth(90);
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(110);
         tabela.getColumnModel().getColumn(2).setResizable(false);
         tabela.getTableHeader().setReorderingAllowed(false);
         tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

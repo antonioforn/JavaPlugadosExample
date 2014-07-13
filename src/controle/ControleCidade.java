@@ -40,4 +40,23 @@ public class ControleCidade {
         }
         conCidade.desconecta();
     }
+    
+    public void alterarCidade(ModeloCidade mod){
+        conCidade.conexao();
+        
+        try {
+            PreparedStatement pst= conCidade.conn.prepareStatement("update cidade set nome_cidade=?, id_estado=? "
+                    + "where id_cidade= ? ");
+            pst.setString(1, mod.getNome());
+            pst.setInt(2, mod.getCod_estado());
+            pst.setInt(3, mod.getCod());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Editado con exito");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al editar\n" + ex.getMessage());
+        }
+        
+        conCidade.desconecta();
+    }
+    
 }
