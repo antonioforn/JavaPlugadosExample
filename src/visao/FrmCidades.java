@@ -317,6 +317,7 @@ public class FrmCidades extends javax.swing.JFrame {
             mod.setNome(txtNome.getText());
             conecta.execSQLrs("select * from estados where nome_estado like '"
                     + cmbEstado.getSelectedItem().toString() +"'");
+            conecta.rs.next();
             mod.setCod_estado(conecta.rs.getInt("id_estado"));
             control.inserirCidade(mod);
         } catch (SQLException ex) {

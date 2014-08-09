@@ -28,7 +28,7 @@ public class ConectaBanco {
             conn = DriverManager.getConnection(caminho, usuario, senha);
             //JOptionPane.showMessageDialog(null, "Conectado con suceso");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro de conexao. \nErro: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro de conexao. \nMetodo conexao, ConectaBanco\nErro: " + ex.getMessage());
         }
     }
     
@@ -38,7 +38,7 @@ public class ConectaBanco {
             stm.execute(sql);
             
         } catch (SQLException ex) {
-             JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL. \nErro: " + ex.getMessage());
+             JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL. \nexecutaSQL, COnectaBanco\nErro: " + ex.getMessage());
         }
         
     }
@@ -49,7 +49,7 @@ public class ConectaBanco {
             rs = stm.executeQuery(sql);
             
         } catch (SQLException ex) {
-             JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL. \nErro: " + ex.getMessage());
+             JOptionPane.showMessageDialog(null, "Erro de ExecutaSQL. \nMetodo execSQLrs, ConectaBanco\nErro: " + ex.getMessage());
         }
         
     }
@@ -58,7 +58,7 @@ public class ConectaBanco {
         try { 
             conn.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao fechar a conexao. \nErro: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao fechar a conexao. \nConectaBanco\nErro: " + ex.getMessage());
         }
     }
     
