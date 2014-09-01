@@ -144,6 +144,42 @@ public class ControleBairro {
         conexPesq.desconecta();
     } 
     
+    public void Excluir(ModeloBairro bairro){
+        conex.conexao();
+        try {
+            PreparedStatement pst= conex.conn.prepareStatement("delete from bairro where id_bairro=?");
+            pst.setInt(1, bairro.getId());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Datos excluidos con éxito");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al excluir datos." +ex);
+        }
+        
+        conex.desconecta();
+    }
     
+    public ModeloBairro retorna(int id){
+        ModeloBairro bairro = new ModeloBairro();
+        conex.conexao();
+        conexPesq.conexao();
+        
+        conex.execSQLrs("select * from bairro where id_bairro= " + id);
+        
+        try {
+            conex.rs.next();
+            conexPesq.execSQLrs("select * from cidade where id_cidade=" + conex.rs.getInt("id_cidade"));
+            conexPesq.rs.next();
+            cidade= conexPesq.rs.getString("nome_cidade");
+            bairro.setId(conex.rs.getInt("id_bairro"));
+            bairro.setNome(conex.rs.getString("nome_bairro"));
+            bairro.setCidade(cidade);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al traer el  registro" + ex);
+        }
+        
+        conex.desconecta();
+        conexPesq.desconecta();
+        return bairro;
+    }   
     
 }

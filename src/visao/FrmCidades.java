@@ -30,6 +30,7 @@ public class FrmCidades extends javax.swing.JFrame {
         conecta2.conexao();
         preencherTabela("select * from cidade inner join estados on cidade.id_estado = estados.id_estado order by id_cidade");
         preencherCmbEstado();
+        this.padre=null;
     }
     
     public FrmCidades(javax.swing.JFrame padre) {
@@ -324,6 +325,7 @@ public class FrmCidades extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         preencherTabela("select * from cidade inner join estados on cidade.id_estado = estados.id_estado order by id_cidade");
+        if(padre!=null) FrmBairro.atualizaCombo();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
