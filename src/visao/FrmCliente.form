@@ -52,7 +52,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="jTextFieldCod" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -77,7 +77,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonSalvar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jButtonAlt" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonEditar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jButtonExcluir" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -121,7 +121,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldCod" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldNome" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxTel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -149,7 +149,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonNovo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonAlt" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonEditar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -177,12 +177,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSalvarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonAlt">
+    <Component class="javax.swing.JButton" name="jButtonEditar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Alterar"/>
+        <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAltActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonExcluir">
@@ -208,9 +208,9 @@
         <Property name="text" type="java.lang.String" value="Cod:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="jTextFieldCod">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldCodActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

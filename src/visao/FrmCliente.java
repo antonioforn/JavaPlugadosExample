@@ -48,12 +48,12 @@ public class FrmCliente extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButtonNovo = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
-        jButtonAlt = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jFormattedTextFieldRG = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldCod = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -101,10 +101,10 @@ public class FrmCliente extends javax.swing.JFrame {
             }
         });
 
-        jButtonAlt.setText("Alterar");
-        jButtonAlt.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAltActionPerformed(evt);
+                jButtonEditarActionPerformed(evt);
             }
         });
 
@@ -124,9 +124,9 @@ public class FrmCliente extends javax.swing.JFrame {
 
         jLabel1.setText("Cod:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldCod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldCodActionPerformed(evt);
             }
         });
 
@@ -175,7 +175,7 @@ public class FrmCliente extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
@@ -198,7 +198,7 @@ public class FrmCliente extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonSalvar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButtonAlt)
+                                .addComponent(jButtonEditar)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButtonExcluir)
                                 .addGap(18, 18, 18)
@@ -232,7 +232,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -257,7 +257,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonNovo)
-                    .addComponent(jButtonAlt)
+                    .addComponent(jButtonEditar)
                     .addComponent(jButtonExcluir)
                     .addComponent(jButtonCancelar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -273,7 +273,7 @@ public class FrmCliente extends javax.swing.JFrame {
         jFormattedTextFieldNum.setEnabled(true);
         jButtonExcluir.setEnabled(true);
         jButtonSalvar.setEnabled(true);
-        jButtonAlt.setEnabled(true);
+        jButtonEditar.setEnabled(true);
         jButtonNovo.setEnabled(false);
 
     }//GEN-LAST:event_jButtonNovoActionPerformed
@@ -281,22 +281,50 @@ public class FrmCliente extends javax.swing.JFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
         if(flag){
-            cliente.setNome(null);
-            cliente.setEndereco(null);
-            cliente.setRg(null);
-            cliente.setCpf(null);
-            cliente.setBairro(null);
+            cliente.setNome(jTextFieldNome.getText());
+            cliente.setEndereco(jTextFieldEnd.getText());
+            cliente.setRg(jFormattedTextFieldRG.getText());
+            cliente.setCpf(jFormattedTextFieldCPF.getText());
+            ///
+            //
+            //
+            //control.Inserir(cliente);
+            jButtonSalvar.setEnabled(false);
+            jButtonCancelar.setEnabled(false);
+            jTextFieldEnd.setEnabled(false);
+            jTextFieldNome.setEnabled(false);
+            jFormattedTextFieldCPF.setEnabled(false);
+            jFormattedTextFieldRG.setEnabled(false);
+            jButtonNovo.setEnabled(true);
+            jTextFieldEnd.setText("");
+            jTextFieldNome.setText("");
+            //preencherTabela();
+        }else{
+            cliente.setId(Integer.parseInt(jTextFieldCod.getText()));
+            cliente.setNome(jTextFieldNome.getText());
+            cliente.setEndereco(jTextFieldEnd.getText());
+            cliente.setRg(jFormattedTextFieldRG.getText());
+            cliente.setCpf(jFormattedTextFieldCPF.getText());
+            ///
+            //
+            //
+            //control.alterar(cliente);
+            jButtonSalvar.setEnabled(false);
+            jButtonCancelar.setEnabled(false);
+            jButtonEditar.setEnabled(false);
+            jTextFieldEnd.setEnabled(false);
+            jTextFieldNome.setEnabled(false);
+            jFormattedTextFieldCPF.setEnabled(false);
+            jFormattedTextFieldRG.setEnabled(false);
+            jButtonNovo.setEnabled(true);
+            jTextFieldEnd.setText("");
+            jTextFieldNome.setText("");
+            //preencherTabela();            
         }
-        telefone.setTel(jFormattedTextFieldNum.getText());
-        control.inserir(telefone);
-        jFormattedTextFieldNum.setEnabled(false);
-        jButtonExcluir.setEnabled(false);
-        jButtonSalvar.setEnabled(false);
-        jButtonAlt.setEnabled(false);
-        jButtonNovo.setEnabled(true);
+        
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
-    private void jButtonAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltActionPerformed
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         telefone.setCod(Integer.parseInt(jTextFieldCod.getText()));
         telefone.setTel(jFormattedTextFieldNum.getText());
         control.alterar(telefone);
@@ -304,10 +332,10 @@ public class FrmCliente extends javax.swing.JFrame {
         jButtonExcluir.setEnabled(false);
         jButtonSalvar.setEnabled(false);
         jButtonSalvar.setEnabled(false);
-        jButtonAlt.setEnabled(false);
+        jButtonEditar.setEnabled(false);
         jButtonNovo.setEnabled(true);
 
-    }//GEN-LAST:event_jButtonAltActionPerformed
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         telefone.setCod(Integer.parseInt(jTextFieldCod.getText()));
@@ -316,7 +344,7 @@ public class FrmCliente extends javax.swing.JFrame {
         jButtonExcluir.setEnabled(false);
         jButtonSalvar.setEnabled(false);
         jButtonSalvar.setEnabled(false);
-        jButtonAlt.setEnabled(false);
+        jButtonEditar.setEnabled(false);
         jButtonNovo.setEnabled(true);
 
     }//GEN-LAST:event_jButtonExcluirActionPerformed
@@ -325,9 +353,9 @@ public class FrmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldCodActionPerformed
 
     /**
      * @param args the command line arguments
@@ -367,8 +395,8 @@ public class FrmCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButtonAlt;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonSalvar;
@@ -389,7 +417,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldCod;
     private javax.swing.JTextField jTextFieldEnd;
     private javax.swing.JTextField jTextFieldNome;
     // End of variables declaration//GEN-END:variables
