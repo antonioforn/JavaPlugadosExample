@@ -66,9 +66,19 @@ public class Principal extends javax.swing.JFrame {
         mnCadastros.add(jMenuItem2);
 
         jMenuItem3.setText("Bairro");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         mnCadastros.add(jMenuItem3);
 
         jMenuItem4.setText("Telefones");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         mnCadastros.add(jMenuItem4);
 
         jMenuItem5.setText("Clientes");
@@ -141,6 +151,14 @@ public class Principal extends javax.swing.JFrame {
         this.setEnabled(false);
         new FrmCidades(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        new FrmBairro().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        new FrmTelefone().setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments

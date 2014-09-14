@@ -42,10 +42,46 @@ public class ControleTelefone {
     }
     
     public void Excluir(ModeloTelefone telefone){
-    
+        connex.conexao();
+        PreparedStatement pst;
+        try {
+            pst = connex.conn.prepareStatement("delete from telefone where id_telefone=?");
+            pst.setInt(1, telefone.getCod());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Datos excluidos con suceso");
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Error\n Erro: " +ex);
+        }
+        
+        connex.desconecta();
     }
 
     public ModeloTelefone primeiro() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connex.conexao();
+        connex.execSQLrs("select * from telefone");
+        try {
+            connex.rs.first();
+            telefone.setCod(connex.rs.getInt("id_telefone"));
+            telefone.setTel(connex.rs.getString("numero_tel"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro: + ex");
+        }
+        connex.desconecta();
+        return telefone;
     }
+    
+    public ModeloTelefone ultimo(){
+        connex.conexao();
+        connex.execSQLrs("select * from telefone");
+        try {
+            connex.rs.last();
+            telefone.setCod(connex.rs.getInt("id_telefone"));
+            telefone.setTel(connex.rs.getString("numero_tel"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro: + ex");
+        }
+        connex.desconecta();
+        return telefone;        
+    }
+    
 }

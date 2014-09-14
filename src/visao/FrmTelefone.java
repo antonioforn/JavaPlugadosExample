@@ -45,17 +45,19 @@ public class FrmTelefone extends javax.swing.JFrame {
         jButtonAlt = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonPrimeiro = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonUlt = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jFormattedTextFieldNum = new javax.swing.JFormattedTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("CADASTRO DE TELEFONE");
 
         jLabel2.setText("Cod:");
+
+        jTextFieldCod.setEnabled(false);
 
         jLabel3.setText("Número:");
 
@@ -94,7 +96,12 @@ public class FrmTelefone extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText(">>");
+        jButtonUlt.setText(">>");
+        jButtonUlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUltActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("<");
 
@@ -132,7 +139,7 @@ public class FrmTelefone extends javax.swing.JFrame {
                         .addComponent(jButtonExcluir)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addComponent(jButtonUlt)
                     .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -144,7 +151,7 @@ public class FrmTelefone extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPrimeiro)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonUlt))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -185,6 +192,7 @@ public class FrmTelefone extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
@@ -243,6 +251,16 @@ public class FrmTelefone extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonAltActionPerformed
 
+    private void jButtonUltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUltActionPerformed
+        telefone= control.ultimo();
+        jTextFieldCod.setText(String.valueOf(telefone.getCod()));
+        jFormattedTextFieldNum.setText(telefone.getTel());
+        jFormattedTextFieldNum.setEnabled(true);
+        jButtonExcluir.setEnabled(true);
+        jButtonAlt.setEnabled(true);
+        jButtonNovo.setEnabled(false);
+    }//GEN-LAST:event_jButtonUltActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -254,7 +272,7 @@ public class FrmTelefone extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -279,7 +297,6 @@ public class FrmTelefone extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonAlt;
@@ -287,6 +304,7 @@ public class FrmTelefone extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonPrimeiro;
     private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JButton jButtonUlt;
     private javax.swing.JFormattedTextField jFormattedTextFieldNum;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
