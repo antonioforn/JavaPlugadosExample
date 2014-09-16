@@ -10,8 +10,11 @@ public class ModeloCliente {
     private String rg;
     private String cpf;
     private String bairro;
+    private int idBairro;
     private String cidade;
+    private int idCidade;
     private String telefone;   
+    private int idTelefone;
 
     public int getId() {
         return id;
@@ -75,6 +78,30 @@ public class ModeloCliente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public int getIdBairro() {
+        return idBairro;
+    }
+
+    public void setIdBairro(int idBairro) {
+        this.idBairro = idBairro;
+    }
+
+    public int getIdCidade() {
+        return idCidade;
+    }
+
+    public void setIdCidade(int idCidade) {
+        this.idCidade = idCidade;
+    }
+
+    public int getIdTelefone() {
+        return idTelefone;
+    }
+
+    public void setIdTelefone(int idTelefone) {
+        this.idTelefone = idTelefone;
     }
     
     
